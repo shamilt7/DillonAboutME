@@ -1,0 +1,116 @@
+/* General page styling */
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #e3d8d8;
+    color: #222;
+}
+
+/* Header */
+header {
+    background: #c00e0e;
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 100px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 20px
+    ;
+}
+
+/* Main layout */
+main {
+    max-width: 1000px;
+    margin: 20px auto 40px;
+    padding: 0 15px;
+}
+
+/* Ranking section */
+.ranking {
+    display: list-item;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+/* Car cards */
+.car-style {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    border-top: 4px solid #1f2ea2;
+}
+
+.car-card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.car-card p {
+    margin: 8px 0 10px;
+    line-height: 1.4;
+}
+
+
+
+.car-card li {
+    margin-bottom: 4px;
+}
+
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px 10px;
+    background: #222;
+    color: #fff;
+    font-size: 15px;
+}
+
+.bold {
+
+    font-weight: bold;
+}
+
+.carclass{
+
+    margin-left: 10px;
+}
+
+.anchor{
+    text-align: center;
+    margin: 20px;
+
+
+}
+.anchora{
+color: aqua;
+margin: 0 10px;
+font-weight: bold;
+
+}
+
+.back-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #1f2ea2;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+
+}
+
+.back-btn:hover {
+    background-color: #c0392b;
+}

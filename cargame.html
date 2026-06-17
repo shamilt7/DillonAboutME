@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Car Game</title>
+<style>
+  body {
+    margin: 0;
+    background: #ece6e6;
+    overflow: hidden;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  canvas {
+    display: block;
+    margin: auto;
+    background: #444;
+    border: 2px solid #fff;
+  }
+  #instructions {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #cc0f0f;
+  }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="400" height="600"></canvas>
+<div id="instructions">
+  Use <b>Arrow Keys</b> to move the car. Avoid the yellow blocks!
+</div>
+<form action="" method="GET">  
+  <button type="submit">Click Here to Try Again</button>  
+</form>  
+<script>
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let car = { x: 180, y: 500, width: 40, height: 80, speed: 5 };
+let obstacles = [];
+let keys = {};
+let score = 0;
+let gameOver = false;
+
+// Handle key presses
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+// Create obstacles
+function createObstacle() {
+  let width = 40;
+  let x = Math.random() * (canvas.width - width);
+  obstacles.push({ x, y: -80, width, height: 80, speed: 4 });
+}
+
+// Update game state
+function update() {
+  if (keys["ArrowLeft"] && car.x > 0) car.x -= car.speed;
+  if (keys["ArrowRight"] && car.x < canvas.width - car.width) car.x += car.speed;
+  if (keys["ArrowUp"] && car.y > 0) car.y -= car.speed;
+  if (keys["ArrowDown"] && car.y < canvas.height - car.height) car.y += car.speed;
+
+  obstacles.forEach(o => o.y += o.speed);
+
+  // Collision detection
+  obstacles.forEach(o => {
+    if (car.x < o.x + o.width &&
+        car.x + car.width > o.x &&
+        car.y < o.y + o.height &&
+        car.y + car.height > o.y) {
+      gameOver = true;
+    }
+  });
+
+  // Remove passed obstacles and increase score
+  obstacles = obstacles.filter(o => {
+    if (o.y > canvas.height) {
+      score++;
+      return false;
+    }
+    return true;
+  });
+}
+
+// Draw everything
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw car
+  ctx.fillStyle = "red";
+  ctx.fillRect(car.x, car.y, car.width, car.height);
+
+  // Draw obstacles
+  ctx.fillStyle = "yellow";
+  obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.width, o.height));
+
+  // Draw score
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+  ctx.fillText("Score: " + score, 10, 20);
+
+  if (gameOver) {
+    ctx.fillStyle = "white";
+    ctx.font = "40px Arial";
+    ctx.fillText("GAME OVER", 80, 300);
+  }
+}
+
+// Game loop
+let obstacleTimer = 0;
+function gameLoop() {
+  if (!gameOver) {
+    update();
+    draw();
+    obstacleTimer++;
+    if (obstacleTimer > 60) {
+      createObstacle();
+      obstacleTimer = 0;
+    }
+    requestAnimationFrame(gameLoop);
+  } else {
+    draw();
+  }
+}
+
+gameLoop();
+</script>
+<a href="index.html" class="back-button">Back to About Me</a>
+
+
+
